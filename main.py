@@ -10,6 +10,8 @@ from collections import Counter
 nltk.download('stopwords')
 nltk.download('punkt')
 
+analyzed_links = []
+
 # Funkcja do pobierania artykułów z różnymi klasami, obsługująca różne formaty daty
 def get_articles(url):
     response = requests.get(url)
@@ -23,6 +25,11 @@ def get_articles(url):
             title = article.find('h3', class_='blog-post-card-title').text.strip()
             link = article.find('a')['href']
             date_elem = article.find('time', class_='blog-post-card-date')
+
+            # Sprawdzenie, czy link artykułu już był analizowany
+            if link in analyzed_links:
+                continue
+            analyzed_links.append(link)
             
             # Obsługa różnych formatów daty
             if date_elem:
@@ -45,6 +52,11 @@ def get_articles(url):
             title = article.find('h3', class_='blog-categories-card-title').text.strip()
             link = article.find('a')['href']
             date_elem = article.find('div', class_='blog-categories-card-footer')
+            
+            # Sprawdzenie, czy link artykułu już był analizowany
+            if link in analyzed_links:
+                continue
+            analyzed_links.append(link)
             
             # Obsługa różnych formatów daty
             if date_elem:
