@@ -82,8 +82,8 @@ def get_articles(url):
         return []
 
 # Funkcja do analizy artykułu
-def analyze_article(title, article_url, date):
-    response = requests.get(article_url)
+def analyze_article(title, link, date):
+    response = requests.get(link)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         article_content = soup.find('span', id='hs_cos_wrapper_post_body').get_text()
@@ -117,7 +117,7 @@ def analyze_article(title, article_url, date):
 
         print("-" * 30)
     else:
-        print(f"Błąd podczas pobierania artykułu {article_url}")
+        print(f"Błąd podczas pobierania artykułu {link}")
 
 # Główna funkcja
 def main():
@@ -130,9 +130,9 @@ def main():
         # Pobieranie 3 najnowszych artykułów z całej strony
         newest_articles = all_articles[:3]
 
-        for i, (title, article_link, date) in enumerate(newest_articles):
+        for i, (title, link, date) in enumerate(newest_articles):
             print(f"Analiza artykułu {i+1}:")
-            analyze_article(title, article_link, date)
+            analyze_article(title, link, date)
         
         print(f"Liczba wszystkich artykułów na stronie: {len(all_articles)}")
 
