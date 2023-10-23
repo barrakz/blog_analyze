@@ -99,10 +99,10 @@ def analyze_article(title, link, date):
         # Usunięcie znaków interpunkcyjnych i stop words
         tokens = [word for word in tokens if word.isalnum() and word not in stopwords.words('english')]
 
-        # Znajdowanie 5 najczęściej występujących fraz kluczowych
+        # Znajdowanie 5 najczęściej występujących fraz kluczowych o maksymalnej długości 3 słów
         phrase_counter = Counter()
         for i in range(len(tokens)):
-            for j in range(i + 1, len(tokens) + 1):
+            for j in range(i + 1, min(i + 4, len(tokens) + 1)):  # Zmiana zakresu pętli
                 phrase = ' '.join(tokens[i:j])
                 phrase_counter[phrase] += 1
 
